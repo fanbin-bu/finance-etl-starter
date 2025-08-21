@@ -1,0 +1,16 @@
+[project]
+name = "finance-etl-starter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ofxparse==0.21",
+    "pandas==2.2.2",
+    "clickhouse-connect==0.7.18",
+    "python-dateutil==2.9.0.post0",
+    "pyyaml==6.0.2",
+    "playwright==1.47.0",
+    "pyotp==2.9.0",
+    "python-dotenv==1.0.1"
+]

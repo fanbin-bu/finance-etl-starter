@@ -1,0 +1,78 @@
+{
+  "name": "Personal Finance Starter",
+  "description": "Starter dashboard: cash flow, category spend, holdings snapshot.",
+  "collection": null,
+  "parameters": [],
+  "ordered_cards": [
+    {
+      "visualization_settings": {
+        "graph.dimensions": [
+          "txn_date"
+        ],
+        "graph.metrics": [
+          "amount"
+        ]
+      },
+      "sizeX": 12,
+      "sizeY": 6,
+      "col": 0,
+      "row": 0,
+      "card": {
+        "name": "Monthly Cash Flow",
+        "dataset_query": {
+          "type": "native",
+          "native": {
+            "query": "\n              SELECT\n                toStartOfMonth(txn_date) AS month,\n                sum(amount) AS net_flow,\n                sumIf(amount, amount > 0) AS inflow,\n                -sumIf(amount, amount < 0) AS outflow\n              FROM finance.transactions_bank\n              GROUP BY month\n              ORDER BY month\n            ",
+            "template-tags": {}
+          },
+          "database": 1
+        },
+        "display": "line",
+        "visualization_settings": {},
+        "description": "Income vs expenses by month (bank transactions)"
+      }
+    },
+    {
+      "visualization_settings": {},
+      "sizeX": 12,
+      "sizeY": 6,
+      "col": 0,
+      "row": 6,
+      "card": {
+        "name": "Top Categories (Last 90 Days)",
+        "dataset_query": {
+          "type": "native",
+          "native": {
+            "query": "\n              SELECT category, round(sum(-amount),2) AS spend\n              FROM finance.transactions_bank\n              WHERE txn_date >= today() - 90 AND amount < 0\n              GROUP BY category\n              ORDER BY spend DESC\n              LIMIT 12\n            ",
+            "template-tags": {}
+          },
+          "database": 1
+        },
+        "display": "bar",
+        "visualization_settings": {},
+        "description": "Spending by category (negative amounts)"
+      }
+    },
+    {
+      "visualization_settings": {},
+      "sizeX": 12,
+      "sizeY": 6,
+      "col": 0,
+      "row": 12,
+      "card": {
+        "name": "Holdings Snapshot",
+        "dataset_query": {
+          "type": "native",
+          "native": {
+            "query": "\n              SELECT asof, symbol, sum(mkt_value) AS value\n              FROM finance.positions_snapshot\n              WHERE asof >= today() - 120\n              GROUP BY asof, symbol\n              ORDER BY asof\n            ",
+            "template-tags": {}
+          },
+          "database": 1
+        },
+        "display": "line",
+        "visualization_settings": {},
+        "description": "Positions market value over time"
+      }
+    }
+  ]
+}

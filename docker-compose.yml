@@ -1,0 +1,26 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.6
+    container_name: ch_finance
+    ports:
+      - "8123:8123" # HTTP
+      - "9000:9000" # Native
+    volumes:
+      - ch_data:/var/lib/clickhouse
+      - ./schemas:/schemas:ro
+    environment:
+      - CLICKHOUSE_DB=finance
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase_finance
+    ports:
+      - "3000:3000"
+    environment:
+      - MB_DB_FILE=/metabase.db/metabase.db
+    volumes:
+      - metabase_data:/metabase.db
+
+volumes:
+  ch_data:
+  metabase_data:

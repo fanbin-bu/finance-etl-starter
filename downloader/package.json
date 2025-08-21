@@ -1,0 +1,20 @@
+{
+  "name": "finance-etl-downloader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install:pw": "npx playwright install",
+    "download:boa": "tsx src/boa.ts",
+    "download:usbank": "tsx src/usbank.ts",
+    "download:citi": "tsx src/citi.ts",
+    "download:fidelity": "tsx src/fidelity.ts",
+    "download:all": "npm run download:boa && npm run download:usbank && npm run download:citi && npm run download:fidelity"
+  },
+  "dependencies": {
+    "otplib": "^12.0.1",
+    "playwright": "^1.47.2",
+    "dotenv": "^16.4.5",
+    "tsx": "^4.19.1"
+  }
+}

@@ -1,0 +1,36 @@
+banks:
+  bank_of_america:
+    match_headers: ["Date", "Description", "Amount"]
+    date: "Date"
+    description: "Description"
+    amount: "Amount"
+    debit_negative: true
+  us_bank:
+    match_headers: ["Date", "Transaction Description", "Amount"]
+    date: "Date"
+    description: "Transaction Description"
+    amount: "Amount"
+    debit_negative: true
+  citi:
+    match_headers: ["Date", "Description", "Debit", "Credit"]
+    date: "Date"
+    description: "Description"
+    debit_field: "Debit"
+    credit_field: "Credit"
+    debit_negative: true
+
+category_rules:
+  - contains: "STARBUCKS"
+    category: "Food & Drink"
+  - contains: "UBER"
+    category: "Transport"
+  - contains: "LYFT"
+    category: "Transport"
+  - contains: "AMAZON"
+    category: "Shopping"
+  - contains: "WHOLE FOODS"
+    category: "Groceries"
+  - contains: "SAFEWAY"
+    category: "Groceries"
+  - contains: "COSTCO"
+    category: "Groceries"
